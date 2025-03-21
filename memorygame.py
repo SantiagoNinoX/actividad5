@@ -27,6 +27,9 @@ def xy(count):
     "Convert tiles count to (x, y) coordinates."
     return (count % 8) * 50 - 200, (count // 8) * 50 - 200
 
+def juego_terminado():
+    return all(not escondido for escondido in hide)
+
 def tap(x, y):
     "Update mark and hidden tiles based on tap."
     spot = index(x, y)
@@ -66,7 +69,10 @@ def draw():
     goto(0, 200)
     color("black")
     write(f"Taps: {state["taps"]}")
-
+    if juego_terminado():
+        goto(0, 0)
+        color("green")
+        write("¡Ganaste!")
     update()
     ontimer(draw, 100)
 
